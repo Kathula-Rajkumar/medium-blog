@@ -11,7 +11,7 @@ export const userRouter = new Hono<{
     }
 }>();
 
-
+// Middleware to check if the user is authenticated
 
 userRouter.post('/signup', async (c) => {
   const body = await c.req.json();
@@ -50,7 +50,7 @@ userRouter.post('/signup', async (c) => {
 
 // export default userRouter;
 
-    
+// Signin route
     
 userRouter.post('/signin', async (c) => {
     const body = await c.req.json();

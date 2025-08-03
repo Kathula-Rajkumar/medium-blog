@@ -1,4 +1,4 @@
-//
+
 import { createBlogInput, updateBlogInput } from "@rajkumar_dev_15/medium-common";
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
@@ -18,7 +18,7 @@ export const blogRouter = new Hono<{
     },
   }>();
   
-
+// Middleware to check if the user is authenticated
   blogRouter.use(async (c, next) => {
     const authHeader = c.req.header("Authorization");
     
@@ -47,6 +47,8 @@ export const blogRouter = new Hono<{
 //   }
 // });
 
+// Create a new blog post
+
 blogRouter.post('/', async (c) => {
    const body = await c.req.json();
    const { success } = createBlogInput.safeParse(body);
@@ -74,6 +76,7 @@ blogRouter.post('/', async (c) => {
 })
 
 
+// Update an existing blog post
 
 blogRouter.put("/", async (c) => {
   const body = await c.req.json();
@@ -108,7 +111,18 @@ blogRouter.get("/bulk", async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
       }).$extends(withAccelerate()); 
-     const blogs = await prisma.blog.findMany();
+     const blogs = await prisma.blog.findMany({
+      select:{
+        content : true,
+        title: true,
+        id: true,
+        author : {
+          select: {  
+            name: true,
+          }
+        }
+      }
+     });
 
   return c.json({
     blogs
@@ -127,6 +141,16 @@ blogRouter.get("/:id", async (c) => {
       where: {
         id: Number(id), // Assuming the blog ID is passed in the request body
       },
+      select:{
+        id: true,
+        title: true,
+        content: true,
+        author: {
+          select :{
+            name: true
+          }
+        }
+      }
     });
 
     return c.json({

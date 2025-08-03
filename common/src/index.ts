@@ -1,5 +1,6 @@
 import z from "zod";
 
+ //zod schemas for validation 
 export const signupInput = z.object({
     email: z.string().email(),
     password: z.string().min(6),
@@ -24,7 +25,7 @@ export const updateBlogInput = z.object({
 }); 
 
 
-
+//inference types 
 export type signupInput = z.infer<typeof signupInput>;
 export type signinInput = z.infer<typeof signinInput>
 export type createBlogInput = z.infer<typeof createBlogInput>;
