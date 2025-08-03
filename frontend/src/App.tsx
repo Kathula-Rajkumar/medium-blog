@@ -1,7 +1,9 @@
+import "./App.css";
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Signup } from './pages/Signup'
 import { Signin } from './pages/Signin'
 import { Blog } from './pages/Blog'
+import { Dashboard } from "./pages/Dashboard";
 import { Blogs } from './pages/Blogs'
 import { Publish } from './pages/Publish'
 
@@ -12,6 +14,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+        <Route path="/" element={<Dashboard></Dashboard>}/>
         <Route path="/signin" element={<Signin></Signin>}/>
         <Route path="/signup" element={<Signup></Signup>}/>
         <Route path="/blog/:id" element={<Blog />} />

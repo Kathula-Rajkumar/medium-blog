@@ -1,15 +1,16 @@
-import { Appbar } from "../components/Appbar";
+import { Navbar } from "../components/Navbar"
 import { BlogCard } from "../components/BlogCard";
 import { BlogSkeleton } from "../components/BlogSkeleton";
-import { useBlogs } from "../hooks"; // ✅
+import { useBlogs } from "../hooks"; 
+import { Msg } from "../components/Msg";
 
 export const Blogs = () => {
   const { loading, blogs } = useBlogs();
 
   if (loading) {
     return (
-      <div>
-        <Appbar />
+      <div className="bg-primary">
+       <Navbar /> 
         <div className="flex justify-center flex-col">
           <div>
             <BlogSkeleton />
@@ -26,32 +27,20 @@ export const Blogs = () => {
 
   return (
     <div>
-      <Appbar />
-      <div className="flex justify-center">
+        <Navbar/>
+        <Msg/>
+      <div className="bg-primary back flex flex-col justify-center items-center cursor-pointer">
         <div>
           {blogs.map((blog) => (
             <BlogCard
               id={blog.id}
-              authorName={blog.author.name || "Anonymous"}
+              authorName={blog.author?.name || "Anonymous"}
               title={blog.title}
               content={blog.content}
               publishedDate={"2023-10-01"}
             />
           ))}
 
-          {/* <BlogCard
-          authorName="John Doe"
-          title="Understanding React"
-          content="React is a JavaScript library for building user interfaces. It allows developers to create large web applications that can change data, without reloading the page. Its key feature is the ability to build components that manage their own state."
-          publishedDate="2023-10-01"
-        />
-
-        <BlogCard
-          authorName="John Doe"
-          title="Understanding React"
-          content="React is a JavaScript library for building user interfaces. It allows developers to create large web applications that can change data, without reloading the page. Its key feature is the ability to build components that manage their own state."
-          publishedDate="2023-10-01"
-        /> */}
         </div>
       </div>
     </div>
